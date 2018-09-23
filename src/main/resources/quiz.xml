@@ -1,0 +1,31 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<beans xmlns = "http://www.springframework.org/schema/beans"
+       xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="communicator" class="com.velvn.projects.quiz.communication.ConsoleCommunicator">
+        <constructor-arg value="#{T(System).out}"/>
+        <constructor-arg value="#{new java.util.Scanner(T(System).in)}"/>
+    </bean>
+
+    <bean id="mathTaskCountSumGenerator" class="com.velvn.projects.quiz.task.generator.MathTaskCountSumGenerator"/>
+
+    <bean id="simpleScoreStrategy" class="com.velvn.projects.quiz.task.score.SimpleScoreStrategy">
+        <constructor-arg value="3"/>
+    </bean>
+
+    <bean id="mathTask" class="com.velvn.projects.quiz.task.TaskType">
+        <constructor-arg value="Math task"/>
+        <constructor-arg value="Calculate sum of two numbers"/>
+        <constructor-arg ref="mathTaskCountSumGenerator"/>
+        <constructor-arg ref="simpleScoreStrategy"/>
+    </bean>
+
+    <bean id="quiz" class="com.velvn.projects.quiz.Quiz">
+        <constructor-arg ref="communicator"/>
+        <constructor-arg value="#{T(java.util.Collections).singletonList(mathTask)}"/>
+    </bean>
+
+</beans>
